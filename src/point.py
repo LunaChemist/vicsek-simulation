@@ -1,4 +1,4 @@
-from constants import constants
+from src.constants import constants
 
 from math import cos, sin, pi
 from random import randrange

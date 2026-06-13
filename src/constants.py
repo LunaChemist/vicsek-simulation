@@ -3,5 +3,5 @@ constants: dict[str, int] = {
     "timestep": 1,
     "influenceRadius": 1,
     "canvasDimensions": 64,
-    "numberOfPoints": 64,
+    "numberOfPoints": 1000,
 }
