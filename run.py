@@ -1,12 +1,23 @@
-from src.canvas import Canvas
-from src.plot import plot
+from src.box import Box
+from src.plot import Window
 
-canvas = Canvas()
-canvas.updateDirections()
+import sys
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtCore import QTimer
 
-coordinates = canvas.getPointCoordinates()
-distances, indexes = canvas.findFixedRadiusNeighbours()
-center = coordinates[0]
-neighbourIndexes = [int(index) for index in indexes[0]]
-neighbours = [coordinates[index] for index in neighbourIndexes]
-plot(coordinates, center, neighbours)
+app = QApplication(sys.argv)
+
+
+box = Box()
+window = Window()
+window.show()
+
+def update():
+    box.updateDirections()
+    box.updatePositions()
+    window.updatePlot(box.getPointCoordinates())
+
+timer = QTimer()
+timer.timeout.connect(update)
+timer.start(16)
+sys.exit(app.exec())

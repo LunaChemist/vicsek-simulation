@@ -1,7 +1,8 @@
 constants: dict[str, int] = {
-    "velocity": 5,
+    "velocity": 1,
     "timestep": 1,
-    "influenceRadius": 10,
-    "canvasDimensions": 64,
-    "numberOfPoints": 1000,
+    "influenceRadius": 20,
+    "boxDimensions": 100,
+    "numberOfPoints": 50,
+    "noiseAmplitude": 0.2,
 }

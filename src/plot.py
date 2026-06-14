@@ -1,25 +1,26 @@
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
+import pyqtgraph as pg
+from PyQt6.QtWidgets import QMainWindow, QTabWidget, QWidget, QVBoxLayout
+
 from src.constants import constants
 
-def plot(coordinates: list[tuple[int,int]], center: tuple[int, int], neighbours: list[tuple[int, int]]):
-    fig, ax = plt.subplots()
+class Window(QMainWindow):
+    def __init__(self):
+        super().__init__()
 
-    xCenter, yCenter = center
+        self.plotWidget = pg.PlotWidget()
+        self.plotWidget.setBackground("w")
+        self.setCentralWidget(self.plotWidget)
 
-    xCoords = [coords[0] for coords in coordinates]
-    yCoords = [coords[1] for coords in coordinates]
+        self.plotWidget.setXRange(0, constants["boxDimensions"])
+        self.plotWidget.setYRange(0, constants["boxDimensions"])
 
-    xNeighbours = [coords[0] for coords in neighbours]
-    yNeighbours = [coords[1] for coords in neighbours]
-    
-    plt.scatter(xCoords, yCoords, c="b")
-    plt.scatter(xNeighbours, yNeighbours, c="r")
-    ax.scatter([xCenter], [yCenter], c="g")
+        self.scatter = self.plotWidget.plot(
+            [], [],
+            pen=None,
+            symbol="o"
+        )
 
-    circle = Circle((xCenter, yCenter), radius=constants["influenceRadius"],
-                    fill=False, edgecolor="black", linewidth=2)
-    ax.add_patch(circle)
-
-    ax.set_aspect("equal")  # keep the circle circular
-    plt.show()
+    def updatePlot(self, pointCoordinates: list[tuple[int, int]]):
+        xPoints = [point[0] for point in pointCoordinates]
+        yPoints = [point[1] for point in pointCoordinates]
+        self.scatter.setData(xPoints, yPoints)
